@@ -59,7 +59,7 @@ class SentenceTransformerEmbedder(BaseEmbedder):
         with self._lock:
             vecs = self.model.encode(
                 list(texts),
-                batch_size=int(config.EMBEDDING_BATCH),
+                batch_size=min(int(config.EMBEDDING_BATCH), 8),
                 convert_to_numpy=True,
                 normalize_embeddings=True,
                 show_progress_bar=False,

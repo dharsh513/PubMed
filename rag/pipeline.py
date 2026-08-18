@@ -270,7 +270,19 @@ class SearchPipeline:
             return payload
 
         articles = self.ingest(pmids)
-        chunks = [c for c in store.get_chunks(pmids) if c.get("text")]
+
+        chunks = [
+            c for c in store.get_chunks(pmids)
+            if c.get("text")
+        ]
+
+# Railway-friendly safety limit.
+# Avoid embedding an excessive number of chunks in a single request.
+        MAX_EMBED_CHUNKS = 150
+
+        if len(chunks) > MAX_EMBED_CHUNKS:
+            chunks = chunks[:MAX_EMBED_CHUNKS]
+
         vectors = self._embed_chunks(chunks)
 
         query_text = understanding.get("corrected") or raw_query

@@ -86,7 +86,7 @@ class Config:
     # Requests per second. NCBI allows 3/s anonymously; stay a little under.
     NCBI_RATE_LIMIT = _env("NCBI_RATE_LIMIT", 2.5)
     # How many PubMed records to pull as the candidate pool before reranking.
-    CANDIDATE_POOL = _env("CANDIDATE_POOL", 60)
+    CANDIDATE_POOL = _env("CANDIDATE_POOL", 20)
     EFETCH_BATCH = _env("EFETCH_BATCH", 100)
     # ESpell costs one extra round trip per query; set false to skip it.
     ENABLE_ESPELL = _env("ENABLE_ESPELL", True)
@@ -98,7 +98,7 @@ class Config:
 
     # ---------------- Embeddings ----------------
     EMBEDDING_MODEL = _env("EMBEDDING_MODEL", "sentence-transformers/all-MiniLM-L6-v2")
-    EMBEDDING_BATCH = _env("EMBEDDING_BATCH", 32)
+    EMBEDDING_BATCH = _env("EMBEDDING_BATCH", 8)
     # If the transformer model cannot be loaded (offline / not installed) the
     # pipeline silently degrades to a TF-IDF vectoriser instead of crashing.
     ALLOW_TFIDF_FALLBACK = _env("ALLOW_TFIDF_FALLBACK", True)
@@ -110,7 +110,7 @@ class Config:
 
     # ---------------- Retrieval ----------------
     TOP_K = _env("TOP_K", 10)             # documents returned to the UI
-    TOP_K_CHUNKS = _env("TOP_K_CHUNKS", 24)  # chunks pulled before doc rollup
+    TOP_K_CHUNKS = _env("TOP_K_CHUNKS", 12)  # chunks pulled before doc rollup
     DENSE_WEIGHT = _env("DENSE_WEIGHT", 0.72)   # semantic similarity weight
     LEXICAL_WEIGHT = _env("LEXICAL_WEIGHT", 0.28)  # BM25 weight
     MMR_LAMBDA = _env("MMR_LAMBDA", 0.72)   # 1.0 = pure relevance, 0.0 = pure diversity
