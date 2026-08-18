@@ -42,9 +42,13 @@ DATA_DIR.mkdir(parents=True, exist_ok=True)
 
 class Config:
     # ---------------- Flask ----------------
-    HOST = _env("FLASK_HOST", "127.0.0.1")
-    PORT = _env("FLASK_PORT", 5000)
-    DEBUG = _env("FLASK_DEBUG", True)
+    # Railway/Render inject the port to bind as the PORT env var and expect
+    # the app to listen on 0.0.0.0 (not 127.0.0.1, which only accepts local
+    # connections and fails the platform's health check). FLASK_HOST /
+    # FLASK_PORT are kept as overrides for local dev; PORT wins when present.
+    HOST = _env("FLASK_HOST", "0.0.0.0")
+    PORT = _env("PORT", _env("FLASK_PORT", 5000))
+    DEBUG = _env("FLASK_DEBUG", False)
     SECRET_KEY = _env("SECRET_KEY", "pubmed-rag-dev-key")
 
     # Flask's auto-reloader watches every module in sys.modules. Importing

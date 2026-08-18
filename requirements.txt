@@ -3,6 +3,7 @@ Flask==3.0.3
 Flask-Cors==4.0.1
 requests==2.32.3
 python-dotenv==1.0.1
+gunicorn==22.0.0
 
 # ---- Citation export ----
 reportlab>=4.0            # PDF generation (reference lists + full reports)
